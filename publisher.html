@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <script type='text/javascript' src='jquery.js'></script>
+    <script type='text/javascript' src='ui.jquery.js'></script>
+    <script type='text/javascript' src='publisher.js'></script>
+    <script type='text/javascript' src='subscriber.js'></script>
+    <script type='text/javascript' src='ui.form.js'></script>
+    <script type='text/javascript' src='ui.formWidget.js'></script>
+    <script type='text/javascript' src='ui.concreteForm.js'></script>
+    <script type='text/javascript' src='ui.concreteFormWidget.js'></script>
+  </head>
+  <body>
+    <div id='form'>
+      <div id='widget1'></div>
+      <div id='widget2'></div>
+      <div id='widget3'></div>
+      <div id='widget4'></div>
+    </div>
+    <script type='text/javascript'>
+      $(function() {
+        var _form = $('#form').concreteForm(),
+        _widget1 = $('#widget1').concreteFormWidget(),
+        _widget2 = $('#widget2').concreteFormWidget(),
+        _widget3 = $('#widget3').concreteFormWidget(),
+        _widget4 = $('#widget4').concreteFormWidget();
+        
+        _form.concreteForm('addWidget', 'widget1', _widget1.concreteFormWidget('asPublisher'));
+        _form.concreteForm('addWidget', 'widget2', _widget2.concreteFormWidget('asPublisher'));
+        _form.concreteForm('addWidget', 'widget3', _widget3.concreteFormWidget('asPublisher'));
+        _form.concreteForm('addWidget', 'widget4', _widget4.concreteFormWidget('asPublisher'));
+        
+        _widget1.concreteFormWidget('addSubscribeHandler', _form.concreteForm('asPublisher'), 'widget2/test', function(_event, _val) {
+          console.log(_val);
+        });
+        
+        _widget2.concreteFormWidget('test', 'widget2/test', {a: 'b', b: 'c'});
+        _widget2.concreteFormWidget('test', 'widget2/test', {c: 'd', d: 'e'});
+        _widget1.concreteFormWidget('test', 'widget2/test', 'smthng');
+      })
+    </script>
+  </body>
+</html>
